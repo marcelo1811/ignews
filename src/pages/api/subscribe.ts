@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/client";
 import { stripe } from "../../services/stripe";
 
-export default async (req: NextApiRequest, res: NextApiResponse) {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     const session = await getSession({ req });
     const stripeCustomer = await stripe.customers.create({
@@ -14,7 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) {
       payment_method_types: ['card'],
       billing_address_collection: 'required',
       line_items: [
-        { price: 'price_1IujXBDMRFNNK5MsRautYwl3' }
+        { price: 'price_1IujXBDMRFNNK5MsRautYwl3', quantity: 1 }
       ],
       mode: 'subscription',
       allow_promotion_codes: true,
